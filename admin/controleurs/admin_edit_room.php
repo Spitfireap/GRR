@@ -105,11 +105,22 @@ if (!isset($retour_page))
 // modification d'une ressource : admin ou gestionnaire
 $user_id = getUserName();
 $acces_config_ress_level = (Settings::get('acces_config'))? Settings::get('acces_config') : 3;
-if (SecuAccess::UserLevel($user_id, $room) < $acces_config_ress_level)
-{
-	showAccessDenied($back);
-	exit();
+
+if (isset($room)) {
+	// Cas d'une modification de ressource
+	if (SecuAccess::UserLevel($user_id, $room) < $acces_config_ress_level)
+	{
+		showAccessDenied($back);
+		exit();
+	}
+} else {
+	// Cas de la création d'une ressource
+	if (SecuAccess::UserLevel($user_id, $area_id, 'area') < 6) {
+		showAccessDenied($back);
+		exit();
+	}
 }
+
 
 /*
 if (SecuAccess::UserLevel(getUserName(),-1) < 6)
