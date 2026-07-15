@@ -115,7 +115,7 @@ if (isset($room)) {
 	}
 } else {
 	// Cas de la création d'une ressource
-	if (SecuAccess::UserLevel($user_id, $area_id, 'area') < 6) {
+	if (SecuAccess::UserLevel($user_id, $area_id, 'area') < $acces_config_ress_level) {
 		showAccessDenied($back);
 		exit();
 	}
